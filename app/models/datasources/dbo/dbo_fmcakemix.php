@@ -319,7 +319,7 @@ class DboFMCakeMix extends DataSource {
 					// if $field is not a related entity
 					// if(strpos($field, '::') === false) {
 						// grab table field data (grabs first repitition)
-						$resultsOut[$i][$model->name][$field] = $value[0];
+						$resultsOut[$i][$model->name][$field] = html_entity_decode($value[0], ENT_COMPAT, 'UTF-8');
 					// } else {
 					// 	$relatedModelName = preg_replace("/(\w+)::(\w+)/", "$1", $field);
 					// 	// grab related data
