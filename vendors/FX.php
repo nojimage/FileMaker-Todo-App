@@ -1463,7 +1463,17 @@ class FX
                 xml_set_character_data_handler($xml_parser, "ElementContents");
                 $xmlParseResult = xml_parse($xml_parser, $data, true);
                 if (! $xmlParseResult) {
-                    $theMessage = sprintf("ExecuteQuery XML error: %s at line %d",
+/* Masayuki Nii added at Oct 9, 2009 */
+					$this->columnCount = -1; 
+					xml_parser_free($xml_parser);
+                	$xml_parser = xml_parser_create("UTF-8");
+                	xml_set_object($xml_parser, $this);
+                	xml_set_element_handler($xml_parser, "StartElement", "EndElement");
+                	xml_set_character_data_handler($xml_parser, "ElementContents");
+                	$xmlParseResult = xml_parse($xml_parser, ConvertSarrogatePair( $data ), true);
+                	if (! $xmlParseResult) {
+/* ==============End of the addition */            	
+                	$theMessage = sprintf("ExecuteQuery XML error: %s at line %d",
                         xml_error_string(xml_get_error_code($xml_parser)),
                         xml_get_current_line_number($xml_parser));
                     xml_parser_free($xml_parser);
@@ -1471,7 +1481,10 @@ class FX
                     $this->lastDebugMessage .= "You should also double check the <strong>user name</strong> and <strong>password</strong> used, the <strong>server address and port</strong>, and <strong>WPE configuration</strong>.<br />\n";
                     $this->lastDebugMessage .= "Finally, be sure that you have specified the correct <strong>data type</strong> (e.g. FileMaker 5 or 6 versus 7 or 8.)</p>\n";
                     return new FX_Error($theMessage);
-                }
+/* Masayuki Nii added at Oct 9, 2009 */
+                	}
+/* ==============End of the addition */            	
+                	}
                 xml_parser_free($xml_parser);
                 break;
             case 'openbase':
@@ -1760,7 +1773,20 @@ class FX
         if ($this->dataParamsEncoding  != '' && defined('MB_OVERLOAD_STRING')) {
             $this->dataParams[]["name"] = mb_convert_encoding($name, $this->dataParamsEncoding, $this->charSet);
             end($this->dataParams);
-            $this->dataParams[key($this->dataParams)]["value"] = mb_convert_encoding($value, $this->dataParamsEncoding, $this->charSet);
+            $convedValue = mb_convert_encoding($value, $this->dataParamsEncoding, $this->charSet);
+/* Masayuki Nii added at Oct 10, 2009 */
+            if ( ! defined('SURROGATE_INPUT_PATCH_DISABLED') && $this->charSet == 'UTF-8')	{
+				$count = 0;
+				for ($i=0; $i< strlen($value); $i++)	{
+					$c = ord(substr( $value, $i, 1 ));
+					if ( ( $c == 0xF0 )&&( (ord(substr( $value, $i+1, 1 )) & 0xF0) == 0xA0 ))	{
+						$i += 4;	$count++;
+					}
+				}
+            	$convedValue .= str_repeat( mb_convert_encoding(chr(0xE3).chr(0x80).chr(0x80), $this->dataParamsEncoding, 'UTF-8'), $count );
+ 			}
+            $this->dataParams[key($this->dataParams)]["value"] = $convedValue;
+// ======================= 
         } else {
             $this->dataParams[]["name"] = $name;
             end($this->dataParams);
@@ -2003,5 +2029,29 @@ class FX
         return true;
     }
 
+}
+
+/* Convert wrong sarrogated-pair character to light code sequence in UTF-8
+ * Masayuki Nii (msyk@msyk.net) Oct 9, 2009
+ * Refered http://www.nii.ac.jp/CAT-ILL/about/system/vista.html
+ */
+function ConvertSarrogatePair($data)	{
+	$altData = '';
+	for ($i=0; $i<strlen($data); $i++)	{
+		$c = substr( $data, $i, 1 );
+		if (( ord($c) == 0xed )&&( (ord(substr( $data, $i+1, 1 )) & 0xF0) == 0xA0 ))	{
+			for ( $j = 0; $j < 6 ; $j++ )
+				$utfSeq[] = ord(substr($data, $i+$j,1));
+			$convSeq[3] = $utfSeq[5];
+			$convSeq[2] = $utfSeq[4] & 0x0F | (($utfSeq[2] & 0x03) << 4) | 0x80;
+			$topDigit = ($utfSeq[1] & 0x0F) + 1;
+			$convSeq[1] = (($utfSeq[2] >> 2) & 0x0F) | (($topDigit & 0x03) << 4) | 0x80;
+			$convSeq[0] = (($topDigit >> 2) & 0x07) | 0xF0;
+			$c = chr( $convSeq[0] ).chr( $convSeq[1] ).chr( $convSeq[2] ).chr( $convSeq[3] );
+			$i += 5;
+		}
+		$altData .= $c;
+	}
+	return $altData;
 }
 ?>
