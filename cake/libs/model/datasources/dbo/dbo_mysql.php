@@ -164,6 +164,11 @@ class DboMysqlBase extends DboSource {
  * @param string $enc Database encoding
  */
 	function setEncoding($enc) {
+		
+		if ( function_exists('mysql_set_charset') ) {
+			return mysql_set_charset($enc, $this->connection);
+		}
+		
 		return $this->_execute('SET NAMES ' . $enc) != false;
 	}
 /**
