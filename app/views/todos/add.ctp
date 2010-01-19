@@ -3,14 +3,12 @@ $this->pageTitle = __('TODOの追加', true);
 
 $fields = array(
     'アイテム' => array('label' => __('アイテム', true)),
-    'カテゴリ' => array('label' => __('カテゴリ', true), 'options' => Todo::$categories_options),
-    '優先順位' => array('label' => __('優先順位', true), 'options' => Todo::$priority_options, 'selected' => '中'),
-    '状況' => array('label' => __('状況', true), 'options' => Todo::$status_options),
+    'カテゴリ' => array('label' => __('カテゴリ', true), 'options' => $valueLists['カテゴリ']),
+    '優先順位' => array('label' => __('優先順位', true), 'options' => $valueLists['優先順位'], 'selected' => '中'),
+    '状況' => array('label' => __('状況', true), 'options' => $valueLists['状況']),
     '作成日' => array('label' => __('作成日', true), 'dateFormat' => 'YMD', 'monthNames' => false, 'minYear' => date('Y'), 'maxYear' => date('Y') + 1),
     '期限' => array('label' => __('期限', true), 'dateFormat' => 'YMD', 'monthNames' => false, 'minYear' => date('Y'), 'maxYear' => date('Y') + 1),
     '備考' => array('label' => __('備考', true), 'type' => 'textarea'),
-    '完了日' => array('label' => __('完了日', true), 'dateFormat' => 'YMD', 'monthNames' => false, 'minYear' => date('Y'), 'maxYear' => date('Y') + 1),
-    '終了' => array('label' => __('終了', true), 'type' => 'checkbox'),
 );
 
 $javascript->codeBlock("
@@ -24,6 +22,6 @@ $javascript->codeBlock("
 
 <div class="actions">
     <ul>
-        <li><?php echo $html->link(__('広告の一覧', true), array('action' => 'index'));?></li>
+        <li><?php echo $html->link(__('TODOの一覧', true), array('action' => 'index'));?></li>
     </ul>
 </div>

@@ -37,6 +37,9 @@ class TodosController extends AppController {
      */
     public function add()
     {
+        // 値一覧のセット
+        $this->set('valueLists', $this->Todo->valueLists);
+        
         if (!empty($this->data)) {
             // POST時
             $this->Todo->create();
@@ -60,6 +63,9 @@ class TodosController extends AppController {
             $this->redirect(array('action'=>'index'));
         }
 
+        // 値一覧のセット
+        $this->set('valueLists', $this->Todo->valueLists);
+        
         if (!empty($this->data)) {
 
             if (empty($this->data['Todo']['id'])) {
@@ -95,4 +101,5 @@ class TodosController extends AppController {
             $this->redirect(array('action'=>'index'));
         }
     }
+    
 }

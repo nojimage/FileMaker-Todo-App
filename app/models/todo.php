@@ -18,7 +18,7 @@ class Todo extends AppModel {
     * デフォルトのレイアウト
     * @var string
     */
-    public $defaultLayout = '一覧表示拡張';
+    public $defaultLayout = 'WebLayout';
 
     /**
      * データベース名
@@ -27,27 +27,26 @@ class Todo extends AppModel {
     public $fmDatabaseName = 'To Do リスト'; 
 
     /**
+     * 値一覧を取得する場合 true
+     * @var boolean
+     */
+    public $returnValueLists = true;
+    
+    /**
+     * call behavior
+     * @var array
+     */
+    public $actsAs = array('FmValueList');
+    
+    /**
      * 入力チェック
      * @var array
      */
     public $validate = array('アイテム' => 'notempty');
-
+    
     /**
-     * カテゴリの選択オプション
+     * 値一覧のリスト
      * @var array
      */
-    static $categories_options = array('個人' => '個人', '仕事' => '仕事');
-
-    /**
-     * 優先順位の選択オプション
-     * @var array
-     */
-    static $priority_options = array('高' => '高', '中' => '中', '低' => '低');
-
-    /**
-     * 状況の選択オプション
-     * @var array
-     */
-    static $status_options = array('公開' => '公開', '非公開' => '非公開');
-
+    public $valueLists = array();
 }
