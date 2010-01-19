@@ -21,7 +21,7 @@
     <dd <?php if ($i++ % 2 == 0) echo $class;?>><?php echo $todo['Todo']['優先順位']; ?>
     &nbsp;</dd>
     <dt <?php if ($i % 2 == 0) echo $class;?>><?php __('備考'); ?></dt>
-    <dd <?php if ($i++ % 2 == 0) echo $class;?>><?php echo $todo['Todo']['備考']; ?>
+    <dd <?php if ($i++ % 2 == 0) echo $class;?>><?php echo nl2br($todo['Todo']['備考']); ?>
     &nbsp;</dd>
     <dt <?php if ($i % 2 == 0) echo $class;?>><?php __('完了日'); ?></dt>
     <dd <?php if ($i++ % 2 == 0) echo $class;?>><?php echo $todo['Todo']['完了日'] ? $time->format('Y-m-d', $todo['Todo']['完了日']) : '' ?>
