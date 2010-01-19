@@ -1,13 +1,13 @@
 <?php
 class AppController extends Controller
 {
-	public $components = array('DebugKit.Toolbar' => array('history' => false));
+    public $components = array('DebugKit.Toolbar' => array('history' => false));
 
-	public $helpers = array('Html', 'Form', 'Javascript', 'Time');
+    public $helpers = array('Html', 'Form', 'Javascript', 'Time');
 
-	/**
-	 *
-	 * @var SessionComponent
-	 */
-	public $Session;
+    /**
+     *
+     * @var SessionComponent
+     */
+    public $Session;
 }
