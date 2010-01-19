@@ -97,11 +97,16 @@ class DboFMCakeMix extends DataSource {
 
         $this->connection = new FX($config['host'],$config['port'], $config['dataSourceType'], $config['scheme']);
         $this->connection->SetDBPassword($config['password'],$config['login']);
+        // encoding convert. see http://msyk.net/fmp/fx_ja/
+        if (isset($config['encoding']) && !empty($config['encoding'])) {
+        	$this->connection->SetCharacterEncoding(Configure::read('App.encoding'));
+        	$this->connection->SetDataParamsEncoding($config['encoding']);
+        }
         
 		$this->connected = true; //always returns true
         return $this->connected; 
     } 
-     
+    
     /** 
      * Close.
      */ 
@@ -319,7 +324,7 @@ class DboFMCakeMix extends DataSource {
 					// if $field is not a related entity
 					// if(strpos($field, '::') === false) {
 						// grab table field data (grabs first repitition)
-						$resultsOut[$i][$model->name][$field] = html_entity_decode($value[0], ENT_COMPAT, 'UTF-8');
+						$resultsOut[$i][$model->name][$field] = $value[0];
 					// } else {
 					// 	$relatedModelName = preg_replace("/(\w+)::(\w+)/", "$1", $field);
 					// 	// grab related data
