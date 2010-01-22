@@ -1,11 +1,24 @@
 <?php
 /**
- * FileMaker value list
- *
- * @author nojima
- *
+ * Get value list behavior
+ * 
+ * filemakerの値一覧を取得するビヘイビア
+ * 
  * This behavior need FMCakeMix DBO
  * @see http://www.beezwax.net/solutions/FMCakeMix
+ * 
+ * PHP versions 5
+ *
+ * Copyright 2010, ELASTIC Consultants Inc. (http://elasticconsultants.com/)
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @package    app
+ * @subpackage app.models.behaviors
+ * @author     nojimage <nojimage at gmail.com>
+ * @copyright  2010 ELASTIC Consultants Inc.
+ * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
  *
  */
 class FmValueListBehavior extends ModelBehavior {
@@ -19,7 +32,8 @@ class FmValueListBehavior extends ModelBehavior {
     }
 
     /**
-     *
+     * get valuelist from filemaker layout
+     * 
      * @param AppModel $model
      * @param string $fieldName
      * @return mixed array or false

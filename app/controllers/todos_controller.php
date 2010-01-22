@@ -1,4 +1,21 @@
 <?php
+/**
+ * Todos Controller
+ *
+ * PHP versions 5
+ *
+ * Copyright 2010, ELASTIC Consultants Inc. (http://elasticconsultants.com/)
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @package    app
+ * @subpackage app.controllers
+ * @author     nojimage <nojimage at gmail.com>
+ * @copyright  2010 ELASTIC Consultants Inc.
+ * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
+ *
+ */
 class TodosController extends AppController {
 
     public $name = 'Todos';

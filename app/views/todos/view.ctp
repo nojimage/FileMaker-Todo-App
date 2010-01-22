@@ -1,3 +1,23 @@
+<?php
+/**
+ * View Todo
+ *
+ * PHP versions 5
+ *
+ * Copyright 2010, ELASTIC Consultants Inc. (http://elasticconsultants.com/)
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ * 
+ * @filesource
+ * @package    app
+ * @subpackage app.views.todos
+ * @author     nojimage <nojimage at gmail.com>
+ * @copyright  2010 ELASTIC Consultants Inc.
+ * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
+ *
+ */
+?>
 <div class="ads view">
 <h2><?php  __('Todo');?></h2>
 <dl>
