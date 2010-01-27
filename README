@@ -4,3 +4,16 @@
 http://www.slideshare.net/nojimage/20100120-applebu-file-makercake-phpweb
 にあります。
 
+補足説明等をブログに書いています。
+http://php-tips.com/php/cakephp-php/2010/01/filemaker-cakephp-webapp
+
+-----
+設置について
+
+app/config/database.phpの内容は各自環境に合わせ変更してください。
+
+app/tmp/ 配下のディレクトリ、ファイルについてWebからの書込権限を与える必要があります。
+
+chmod -R o+w app/tmp/
+
+等にて、書込権限を与えてください。
