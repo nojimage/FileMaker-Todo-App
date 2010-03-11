@@ -260,7 +260,7 @@ class DboFMCakeMix extends DataSource {
 			if(!empty($orderCondition)){
 				foreach($orderCondition as $field => $sortRule) {
 					$string = $field;
-					$pattern = '/(\w+)\.(-*\w+)$/i';
+					$pattern = '/(\X+)\.(-*\X+)$/iu';
 					$replacement = '${2}';
 					$plainField = preg_replace($pattern, $replacement, $string);
 					
@@ -924,7 +924,7 @@ class DboFMCakeMix extends DataSource {
 			
 			foreach($queryData['conditions'] as $conditionField => $conditionValue) {
 				$string = $conditionField;
-				$pattern = '/(\w+)\.(-*\w+)$/i';
+				$pattern = '/(\X+)\.(-*\X+)$/iu';
 				$replacement = '${2}';
 				$plainField = preg_replace($pattern, $replacement, $string);
 				$this->connection->AddDBParam($plainField, $conditionValue, 'eq');
@@ -936,7 +936,7 @@ class DboFMCakeMix extends DataSource {
 			if(!empty($orderCondition)){
 				foreach($orderCondition as $field => $sortRule) {
 					$string = $field;
-					$pattern = '/(\w+)\.(-*\w+)$/i';
+					$pattern = '/(\X+)\.(-*\X+)$/iu';
 					$replacement = '${2}';
 					$plainField = preg_replace($pattern, $replacement, $string);
 					
